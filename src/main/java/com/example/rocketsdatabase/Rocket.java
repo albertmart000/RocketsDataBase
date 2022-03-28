@@ -2,7 +2,6 @@ package com.example.rocketsdatabase;
 
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +67,13 @@ public class Rocket {
         for (Booster booster: boosterList) {
             booster.decreasePower();
         }
+    }
+
+    public Booster addBooster(Booster booster) {
+        booster.setRocket(this);
+        this.boosterList.add(booster);
+        return booster;
+
     }
 }
 

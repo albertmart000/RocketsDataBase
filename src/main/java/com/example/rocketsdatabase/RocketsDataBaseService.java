@@ -18,7 +18,7 @@ public class RocketsDataBaseService {
         this.boosterRepository = boosterRepository;
     }
 
-    public Rocket createRocket(Rocket rocketToCreate){
+    public Rocket createRocket(Rocket rocketToCreate) {
         this.rocketRepository.save(rocketToCreate);
         return rocketToCreate;
     }
@@ -29,34 +29,42 @@ public class RocketsDataBaseService {
         return rockets;
     }
 
-    public void removeAllRockets() {this.rocketRepository.deleteAll();}
+    public void removeAllRockets() {
+        this.rocketRepository.deleteAll();
+    }
 
-    public Rocket updateRocket (Rocket rocketToUpdate, String rocketId) throws Exception {
+    public Rocket updateRocket(Rocket rocketToUpdate, String rocketId) throws Exception {
         Rocket rocket = rocketRepository.findById(rocketId).get();
-            rocket.setRocketCode(rocketToUpdate.getRocketCode());
-            rocketRepository.save(rocket);
-            return rocket;
+        rocket.setRocketCode(rocketToUpdate.getRocketCode());
+        rocketRepository.save(rocket);
+        return rocket;
     }
 
     public Rocket getRocket(String rocketId) {
-       return this.rocketRepository.findById(rocketId).get();
+        return this.rocketRepository.findById(rocketId).get();
     }
 
-    public void removeRocket(String rocketId){ this.rocketRepository.deleteById(rocketId);}
+    public void removeRocket(String rocketId) {
+        this.rocketRepository.deleteById(rocketId);
+    }
+
+    public Booster addBooster(String rocketId, Booster booster) {
+        Rocket rocket = searchRocket(rocketId);
+        booster = rocket.addBooster(booster);
+        boosterRepository.save(booster);
+        return booster;
+    }
 
 
     public List<Booster> getBoosters(String rocketId) {
         Rocket rocket = searchRocket(rocketId);
+
         return rocket.getBoosterList();
     }
 
-    public void removeAllBoosters(String rocketId){
+    public void removeAllBoosters(String rocketId) {
         Rocket rocket = searchRocket(rocketId);
         boosterRepository.deleteAllByRocket(rocket);
-    }
-
-    private Rocket searchRocket(String rocketId) {
-        return rocketRepository.findById(rocketId).get();
     }
 
     public Booster getBooster(String rocketId, String boosterId) {
@@ -66,4 +74,12 @@ public class RocketsDataBaseService {
     public void removeBooster(String rocketId, String boosterId) {
         this.boosterRepository.deleteById(rocketId);
     }
+
+    private Rocket searchRocket(String rocketId) {
+        return rocketRepository.findById(rocketId).get();
+    }
 }
+
+
+
+

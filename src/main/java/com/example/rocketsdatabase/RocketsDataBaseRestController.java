@@ -15,7 +15,7 @@ public class RocketsDataBaseRestController {
     }
 
     @PostMapping("/rockets")
-    public Rocket createRocket(@RequestBody Rocket rocketToCreate){
+    public Rocket createRocket(@RequestBody Rocket rocketToCreate) {
         return rocketsDataBaseService.createRocket(rocketToCreate);
     }
 
@@ -37,30 +37,36 @@ public class RocketsDataBaseRestController {
 
     @GetMapping("/rockets/{rocketId}")
     public Rocket getRocket(@PathVariable String rocketId) {
-           return rocketsDataBaseService.getRocket(rocketId);
+        return rocketsDataBaseService.getRocket(rocketId);
     }
 
     @DeleteMapping("/rockets/{rocketId}")
-    public void removeRocket(@PathVariable String rocketId){
+    public void removeRocket(@PathVariable String rocketId) {
         rocketsDataBaseService.removeRocket(rocketId);
     }
 
-//  @PostMapping("/rockets/{rocketId}/boosters")
-
+    @PostMapping("/rockets/{rocketId}/boosters")
+    public Booster addBooster(@PathVariable String rocketId, @RequestBody Booster booster) {
+        return rocketsDataBaseService.addBooster(rocketId, booster);
+    }
 //  @PutMapping("/rockets/{rocketId}/boosters")
 
     @GetMapping("/rockets/{rocketId}/boosters")
-    public List <Booster> getBoosters(@PathVariable String rocketId){
+    public List<Booster> getBoosters(@PathVariable String rocketId) {
         return rocketsDataBaseService.getBoosters(rocketId);
     }
 
     @DeleteMapping("/rockets/{rocketId}/boosters")
-    public void removeAllBooster(@PathVariable String rocketId){
+    public void removeAllBooster(@PathVariable String rocketId) {
         rocketsDataBaseService.removeAllBoosters(rocketId);
     }
 
+
+//  @PutMapping("/rockets/{rocketId}/boosters/{boosterId}")
+
+
     @GetMapping("/rockets/{rocketId}/boosters/{boosterId}")
-    public Booster getBooster(@PathVariable String rocketId, @PathVariable String boosterId){
+    public Booster getBooster(@PathVariable String rocketId, @PathVariable String boosterId) {
         return rocketsDataBaseService.getBooster(rocketId, boosterId);
     }
 
