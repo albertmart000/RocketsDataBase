@@ -17,7 +17,7 @@ public class Booster {
     @Id
     private String id= UUID.randomUUID().toString();
 
-    public final int STEP_POWER_BOOSTER = 10;
+    public static final int STEP_POWER_BOOSTER = 10;
     public int maxPowerBooster;
     public int currentPowerBooster = 0;
 
@@ -65,9 +65,9 @@ public class Booster {
     }
 
     public void decreasePower() {
-        this.currentPowerBooster =- STEP_POWER_BOOSTER;
+        currentPowerBooster =- STEP_POWER_BOOSTER;
         if (this.currentPowerBooster< 0) {
-            this.currentPowerBooster = 0;
+            currentPowerBooster = 0;
         }
     }
 }

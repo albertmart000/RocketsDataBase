@@ -11,6 +11,8 @@ public class RocketsDataBaseService {
 
     private RocketRepository rocketRepository;
     private BoosterRepository boosterRepository;
+    private String rocketId;
+    private int numberStepsPowerBooster;
 
     public RocketsDataBaseService(RocketRepository rocketRepository,
                                   BoosterRepository boosterRepository) {
@@ -52,7 +54,6 @@ public class RocketsDataBaseService {
         Rocket rocket = rocketRepository.findById(rocketId).get();
         List<Booster> boosters = rocket.addBooster(maxPowerBooster);
         boosterRepository.saveAll(boosters);
-
     }
 
     public List<Booster> getBoosters(String rocketId) {
@@ -84,8 +85,28 @@ public class RocketsDataBaseService {
         rocketRepository.save(rocket);
         return booster;
     }
-}
 
+    public void moveRocket(String rocketId, int numberStepsPowerBooster) throws Exception {
+        Rocket rocket = rocketRepository.findById(rocketId).get();
 
+        if (numberStepsPowerBooster > 0) {
+            for (int i = 1; i <= Math.abs(numberStepsPowerBooster); i++) {
+                rocket.increasePowerRocket();
+                }
+            }
+
+        if (numberStepsPowerBooster < 0) {
+            for (int i = 1; i <= Math.abs(numberStepsPowerBooster); i++) {
+                rocket.decreasePowerRocket();
+                }
+            }
+
+        else if (numberStepsPowerBooster == 0) throw new Exception();
+
+        rocket.getCurrentRocketPower();
+        rocketRepository.save(rocket);
+        }
+
+    }
 
 

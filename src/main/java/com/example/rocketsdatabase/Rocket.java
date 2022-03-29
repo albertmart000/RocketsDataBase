@@ -15,8 +15,8 @@ public class Rocket {
 
     private String rocketCode;
 
-//    private int currentRocketPower;
-//    private int maxRocketPower;
+    private int currentRocketPower;
+    private int maxRocketPower;
 
     @OneToMany(mappedBy = "rocket")
     private List<Booster> boosterList = new ArrayList<>();
@@ -64,13 +64,13 @@ public class Rocket {
         return currentRocketPower;
     }
 
-    public void increasePowerRocket (){
+    public void increasePowerRocket(){
         for (Booster booster: boosterList) {
             booster.increasePower();
         }
     }
 
-    public void decreasePowerRocket (){
+    public void decreasePowerRocket(){
         for (Booster booster: boosterList) {
             booster.decreasePower();
         }
