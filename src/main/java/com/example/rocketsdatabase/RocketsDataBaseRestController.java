@@ -1,6 +1,7 @@
 package com.example.rocketsdatabase;
 
 
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,11 +46,20 @@ public class RocketsDataBaseRestController {
         rocketsDataBaseService.removeRocket(rocketId);
     }
 
+
+
+
+//  @PostMapping("/rockets/{rocketId}/movement")
+
+
+
+
     @PostMapping("/rockets/{rocketId}/boosters")
-    public Booster addBooster(@PathVariable String rocketId, @RequestBody Booster booster) {
-        return rocketsDataBaseService.addBooster(rocketId, booster);
+    public void addBooster(@PathVariable String rocketId, @RequestBody String jsonString) throws Exception {
+        JSONObject json = new JSONObject(jsonString);
+        int maxPowerBooster = json.getInt("maxPowerBooster");
+        rocketsDataBaseService.addBoosterOnRocket(rocketId, maxPowerBooster);
     }
-//  @PutMapping("/rockets/{rocketId}/boosters")
 
     @GetMapping("/rockets/{rocketId}/boosters")
     public List<Booster> getBoosters(@PathVariable String rocketId) {
@@ -62,7 +72,13 @@ public class RocketsDataBaseRestController {
     }
 
 
-//  @PutMapping("/rockets/{rocketId}/boosters/{boosterId}")
+
+    @PutMapping("/rockets/{rocketId}/boosters/{boosterId}")
+    public void updateBooster(@RequestBody Booster boosterToUpdate,@PathVariable String rocketId,
+                              @PathVariable String boosterId) throws Exception {
+        rocketsDataBaseService.updateBooster(boosterToUpdate, rocketId, boosterId);
+    }
+
 
 
     @GetMapping("/rockets/{rocketId}/boosters/{boosterId}")

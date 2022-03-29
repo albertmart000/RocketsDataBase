@@ -14,14 +14,16 @@ public class Rocket {
     private String Id= UUID.randomUUID().toString();
 
     private String rocketCode;
-    private int currentRocketPower;
-    private int maxRocketPower;
+
+//    private int currentRocketPower;
+//    private int maxRocketPower;
 
     @OneToMany(mappedBy = "rocket")
     private List<Booster> boosterList = new ArrayList<>();
 
     public Rocket(){
     }
+
 
     public Rocket(String rocketCode) throws Exception {
         checkRocketCode(rocketCode);
@@ -43,11 +45,16 @@ public class Rocket {
         this.rocketCode = rocketCode;
     }
 
-    public List<Booster> getBoosterList() { return boosterList; }
-
-    public void setBoosterList(List<Booster> boosterList) {
-        this.boosterList = boosterList;
+    public int getMaxRocketPower() {
+        int maxRocketPower = 0;
+        for (Booster booster: boosterList) {
+            maxRocketPower += booster.getMaxPowerBooster();
+        }
+        return maxRocketPower;
     }
+
+
+    public List<Booster> getBoosterList() { return boosterList; }
 
     public int getCurrentRocketPower() {
         int currentRocketPower = 0;
@@ -69,10 +76,11 @@ public class Rocket {
         }
     }
 
-    public Booster addBooster(Booster booster) {
+    public List<Booster> addBooster(int maxPowerBooster) throws Exception {
+        Booster booster = new Booster(maxPowerBooster);
         booster.setRocket(this);
         this.boosterList.add(booster);
-        return booster;
+        return boosterList;
 
     }
 }

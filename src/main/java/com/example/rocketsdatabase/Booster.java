@@ -1,6 +1,7 @@
 package com.example.rocketsdatabase;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -16,26 +17,27 @@ public class Booster {
     @Id
     private String id= UUID.randomUUID().toString();
 
-    public final  int STEP_POWER_BOOSTER = 10;
+    public final int STEP_POWER_BOOSTER = 10;
     public int maxPowerBooster;
     public int currentPowerBooster = 0;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "rocket_id")
+    @JsonIgnore
     private Rocket rocket;
 
     public Booster(){
     }
 
     public Booster(int maxPowerBooster) throws Exception {
-        checkPowerBooster(maxPowerBooster);
+        checkMaxPowerBooster(maxPowerBooster);
         this.maxPowerBooster = maxPowerBooster;
     }
 
     public Booster(Rocket rocket) { this.rocket = rocket; }
 
-    private void checkPowerBooster(int maxPowerBooster) throws Exception {
+    private void checkMaxPowerBooster(int maxPowerBooster) throws Exception {
         if (maxPowerBooster < 0)
             throw new Exception("La potencia d'un propulsor ha de ser un número enter positiu.");
     }
@@ -45,7 +47,7 @@ public class Booster {
     public int getCurrentPowerBooster() { return currentPowerBooster; }
 
     public void setMaxPowerBooster(int maxPowerBooster) throws Exception {
-        checkPowerBooster(maxPowerBooster);
+        checkMaxPowerBooster(maxPowerBooster);
         this.maxPowerBooster = maxPowerBooster;
     }
 

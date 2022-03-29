@@ -48,17 +48,15 @@ public class RocketsDataBaseService {
         this.rocketRepository.deleteById(rocketId);
     }
 
-    public Booster addBooster(String rocketId, Booster booster) {
-        Rocket rocket = searchRocket(rocketId);
-        booster = rocket.addBooster(booster);
-        boosterRepository.save(booster);
-        return booster;
-    }
+    public void addBoosterOnRocket(String rocketId, int maxPowerBooster) throws Exception {
+        Rocket rocket = rocketRepository.findById(rocketId).get();
+        List<Booster> boosters = rocket.addBooster(maxPowerBooster);
+        boosterRepository.saveAll(boosters);
 
+    }
 
     public List<Booster> getBoosters(String rocketId) {
         Rocket rocket = searchRocket(rocketId);
-
         return rocket.getBoosterList();
     }
 
@@ -72,11 +70,19 @@ public class RocketsDataBaseService {
     }
 
     public void removeBooster(String rocketId, String boosterId) {
-        this.boosterRepository.deleteById(rocketId);
+        this.boosterRepository.deleteById(boosterId);
     }
 
     private Rocket searchRocket(String rocketId) {
         return rocketRepository.findById(rocketId).get();
+    }
+
+    public Booster updateBooster(Booster boosterToUpdate, String rocketId, String boosterId) throws Exception {
+        Rocket rocket = rocketRepository.findById(rocketId).get();
+        Booster booster = boosterRepository.findById(boosterId).get();
+        booster.setMaxPowerBooster(boosterToUpdate.getMaxPowerBooster());
+        rocketRepository.save(rocket);
+        return booster;
     }
 }
 
