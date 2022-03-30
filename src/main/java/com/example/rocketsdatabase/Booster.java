@@ -1,7 +1,7 @@
 package com.example.rocketsdatabase;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -15,59 +15,59 @@ import java.util.UUID;
 public class Booster {
 
     @Id
-    private String id= UUID.randomUUID().toString();
+    private String Id= UUID.randomUUID().toString();
 
     public static final int STEP_POWER_BOOSTER = 10;
-    public int maxPowerBooster;
-    public int currentPowerBooster = 0;
+    public int maxBoosterPower;
+    public int currentBoosterPower = 0;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "rocket_id")
-    @JsonIgnore
+    @JsonBackReference
     private Rocket rocket;
 
     public Booster(){
     }
 
-    public Booster(int maxPowerBooster) throws Exception {
-        checkMaxPowerBooster(maxPowerBooster);
-        this.maxPowerBooster = maxPowerBooster;
+    public Booster(int maxBoosterPower) throws Exception {
+        checkMaxBoosterPower(maxBoosterPower);
+        this.maxBoosterPower = maxBoosterPower;
     }
 
     public Booster(Rocket rocket) { this.rocket = rocket; }
 
-    private void checkMaxPowerBooster(int maxPowerBooster) throws Exception {
-        if (maxPowerBooster < 0)
+    private void checkMaxBoosterPower(int maxBoosterPower) throws Exception {
+        if (maxBoosterPower < 0)
             throw new Exception("La potencia d'un propulsor ha de ser un número enter positiu.");
     }
 
-    public int getMaxPowerBooster() { return maxPowerBooster; }
+    public int getMaxBoosterPower() { return maxBoosterPower; }
 
-    public int getCurrentPowerBooster() { return currentPowerBooster; }
+    public int getCurrentBoosterPower() { return currentBoosterPower; }
 
-    public void setMaxPowerBooster(int maxPowerBooster) throws Exception {
-        checkMaxPowerBooster(maxPowerBooster);
-        this.maxPowerBooster = maxPowerBooster;
+    public void setMaxBoosterPower(int maxBoosterPower) throws Exception {
+        checkMaxBoosterPower(maxBoosterPower);
+        this.maxBoosterPower = maxBoosterPower;
     }
 
-    public String getId() { return id; }
+    public String getId() { return Id; }
 
     public Rocket getRocket() { return rocket; }
 
     public void setRocket(Rocket rocket) { this.rocket = rocket; }
 
     public void increasePower() {
-        currentPowerBooster += STEP_POWER_BOOSTER;
-        if (this.currentPowerBooster > maxPowerBooster) {
-            currentPowerBooster = maxPowerBooster;
+        currentBoosterPower += STEP_POWER_BOOSTER;
+        if (currentBoosterPower > maxBoosterPower) {
+            currentBoosterPower = maxBoosterPower;
         }
     }
 
     public void decreasePower() {
-        currentPowerBooster =- STEP_POWER_BOOSTER;
-        if (this.currentPowerBooster< 0) {
-            currentPowerBooster = 0;
+        this.currentBoosterPower -= STEP_POWER_BOOSTER;
+        if (currentBoosterPower < 0) {
+            currentBoosterPower = 0;
         }
     }
 }

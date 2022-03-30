@@ -1,6 +1,8 @@
 package com.example.rocketsdatabase;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -15,10 +17,8 @@ public class Rocket {
 
     private String rocketCode;
 
-    private int currentRocketPower;
-    private int maxRocketPower;
-
     @OneToMany(mappedBy = "rocket")
+    @JsonBackReference
     private List<Booster> boosterList = new ArrayList<>();
 
     public Rocket(){
@@ -48,7 +48,7 @@ public class Rocket {
     public int getMaxRocketPower() {
         int maxRocketPower = 0;
         for (Booster booster: boosterList) {
-            maxRocketPower += booster.getMaxPowerBooster();
+            maxRocketPower += booster.getMaxBoosterPower();
         }
         return maxRocketPower;
     }
@@ -59,7 +59,7 @@ public class Rocket {
     public int getCurrentRocketPower() {
         int currentRocketPower = 0;
         for (Booster booster: boosterList) {
-            currentRocketPower += booster.getCurrentPowerBooster();
+            currentRocketPower += booster.getCurrentBoosterPower();
         }
         return currentRocketPower;
     }

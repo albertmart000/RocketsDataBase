@@ -50,8 +50,8 @@ public class RocketsDataBaseRestController {
     @PostMapping("/rockets/{rocketId}/movement")
     public void moveRocket(@PathVariable String rocketId, @RequestBody String jsonString) throws Exception {
         JSONObject json = new JSONObject(jsonString);
-        int numberStepsPowerBooster = json.getInt("numberStepsPowerBooster");
-        rocketsDataBaseService.moveRocket(rocketId, numberStepsPowerBooster);
+        int StepsPower = json.getInt("StepsPower");
+        rocketsDataBaseService.moveRocket(rocketId, StepsPower);
     }
 
     @PostMapping("/rockets/{rocketId}/boosters")
