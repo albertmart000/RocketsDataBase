@@ -21,8 +21,8 @@ public class RocketsDataBaseRestController {
     }
 
     @GetMapping("/rockets")
-    public List<Rocket> getRockets() throws Exception {
-        return rocketsDataBaseService.getRockets();
+    public List<Rocket> getAllRockets() throws Exception {
+        return rocketsDataBaseService.getAllRockets();
     }
 
     @DeleteMapping("/rockets")
@@ -50,20 +50,20 @@ public class RocketsDataBaseRestController {
     @PostMapping("/rockets/{rocketId}/movement")
     public void moveRocket(@PathVariable String rocketId, @RequestBody String jsonString) throws Exception {
         JSONObject json = new JSONObject(jsonString);
-        int StepsPower = json.getInt("StepsPower");
-        rocketsDataBaseService.moveRocket(rocketId, StepsPower);
+        int stepsPower = json.getInt("stepsPower");
+        rocketsDataBaseService.moveRocket(rocketId, stepsPower);
     }
 
     @PostMapping("/rockets/{rocketId}/boosters")
     public void addBooster(@PathVariable String rocketId, @RequestBody String jsonString) throws Exception {
         JSONObject json = new JSONObject(jsonString);
-        int maxPowerBooster = json.getInt("maxPowerBooster");
-        rocketsDataBaseService.addBoosterOnRocket(rocketId, maxPowerBooster);
+        int maxBoosterPower = json.getInt("maxBoosterPower");
+        rocketsDataBaseService.addBoosterOnRocket(rocketId, maxBoosterPower);
     }
 
     @GetMapping("/rockets/{rocketId}/boosters")
-    public List<Booster> getBoosters(@PathVariable String rocketId) {
-        return rocketsDataBaseService.getBoosters(rocketId);
+    public List<Booster> getAllBoosters(@PathVariable String rocketId) {
+        return rocketsDataBaseService.getAllBoosters(rocketId);
     }
 
     @DeleteMapping("/rockets/{rocketId}/boosters")

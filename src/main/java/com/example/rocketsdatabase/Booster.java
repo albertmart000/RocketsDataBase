@@ -17,7 +17,7 @@ public class Booster {
     @Id
     private String Id= UUID.randomUUID().toString();
 
-    public static final int STEP_POWER_BOOSTER = 10;
+    public static final int STEPS_POWER = 10;
     public int maxBoosterPower;
     public int currentBoosterPower = 0;
 
@@ -58,14 +58,14 @@ public class Booster {
     public void setRocket(Rocket rocket) { this.rocket = rocket; }
 
     public void increasePower() {
-        currentBoosterPower += STEP_POWER_BOOSTER;
+        currentBoosterPower += STEPS_POWER;
         if (currentBoosterPower > maxBoosterPower) {
             currentBoosterPower = maxBoosterPower;
         }
     }
 
     public void decreasePower() {
-        this.currentBoosterPower -= STEP_POWER_BOOSTER;
+        this.currentBoosterPower -= STEPS_POWER;
         if (currentBoosterPower < 0) {
             currentBoosterPower = 0;
         }

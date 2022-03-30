@@ -11,8 +11,6 @@ public class RocketsDataBaseService {
 
     private RocketRepository rocketRepository;
     private BoosterRepository boosterRepository;
-    private String rocketId;
-    private int numberStepsPowerBooster;
 
     public RocketsDataBaseService(RocketRepository rocketRepository,
                                   BoosterRepository boosterRepository) {
@@ -25,7 +23,7 @@ public class RocketsDataBaseService {
         return rocketToCreate;
     }
 
-    public List<Rocket> getRockets() {
+    public List<Rocket> getAllRockets() {
         List<Rocket> rockets = new ArrayList<>();
         this.rocketRepository.findAll().forEach(rockets::add);
         return rockets;
@@ -56,7 +54,7 @@ public class RocketsDataBaseService {
         boosterRepository.saveAll(boosters);
     }
 
-    public List<Booster> getBoosters(String rocketId) {
+    public List<Booster> getAllBoosters(String rocketId) {
         Rocket rocket = searchRocket(rocketId);
         return rocket.getBoosterList();
     }
@@ -88,22 +86,13 @@ public class RocketsDataBaseService {
 
     public void moveRocket(String rocketId, int StepsPower) throws Exception {
         Rocket rocket = rocketRepository.findById(rocketId).get();
-
         if (StepsPower == 0) throw new Exception();
-
         for (int i = 1; i <= Math.abs(StepsPower); i++) {
-            if (StepsPower > 0) {
-                    rocket.increasePowerRocket();
-                }
-
-            if (StepsPower < 0) {
-                    rocket.decreasePowerRocket();
-                }
+            if (StepsPower > 0) { rocket.increaseRocketPower(); }
+            if (StepsPower < 0) { rocket.decreaseRocketPower(); }
         }
-
         rocket.getCurrentRocketPower();
         rocketRepository.save(rocket);
-
     }
 
 }

@@ -24,19 +24,17 @@ public class Rocket {
     public Rocket(){
     }
 
-
     public Rocket(String rocketCode) throws Exception {
         checkRocketCode(rocketCode);
         this.rocketCode = rocketCode;
-
     }
+
     private void checkRocketCode(String rocketCode) throws Exception {
         if (!(rocketCode.matches("^[0-9]{2}[A-Z]{6}$") || rocketCode.matches("^[A-Z]{6}[0-9]{2}$")))
             throw new Exception("El format del codi no es correcte.");
     }
 
     public String getId() { return Id; }
-
 
     public String getRocketCode() { return rocketCode; }
 
@@ -53,7 +51,6 @@ public class Rocket {
         return maxRocketPower;
     }
 
-
     public List<Booster> getBoosterList() { return boosterList; }
 
     public int getCurrentRocketPower() {
@@ -62,22 +59,23 @@ public class Rocket {
             currentRocketPower += booster.getCurrentBoosterPower();
         }
         return currentRocketPower;
+
     }
 
-    public void increasePowerRocket(){
+    public void increaseRocketPower(){
         for (Booster booster: boosterList) {
             booster.increasePower();
         }
     }
 
-    public void decreasePowerRocket(){
+    public void decreaseRocketPower(){
         for (Booster booster: boosterList) {
             booster.decreasePower();
         }
     }
 
-    public List<Booster> addBooster(int maxPowerBooster) throws Exception {
-        Booster booster = new Booster(maxPowerBooster);
+    public List<Booster> addBooster(int maxBoosterPower) throws Exception {
+        Booster booster = new Booster(maxBoosterPower);
         booster.setRocket(this);
         this.boosterList.add(booster);
         return boosterList;
