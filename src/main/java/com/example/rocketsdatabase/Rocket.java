@@ -3,8 +3,7 @@ package com.example.rocketsdatabase;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +11,7 @@ import java.util.UUID;
 @Entity(name = "rockets")
 public class Rocket {
 
-    @javax.persistence.Id
+    @Id
     private String Id= UUID.randomUUID().toString();
 
     private String rocketCode;

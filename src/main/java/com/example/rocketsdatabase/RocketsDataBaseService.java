@@ -86,7 +86,7 @@ public class RocketsDataBaseService {
 
     public void moveRocket(String rocketId, int StepsPower) throws Exception {
         Rocket rocket = rocketRepository.findById(rocketId).get();
-        if (StepsPower == 0) throw new Exception();
+        if (StepsPower == 0) throw new Exception("El valor de StepsPower ha de ser un número enter, positiu o negatiu, pero no 0.");
         for (int i = 1; i <= Math.abs(StepsPower); i++) {
             if (StepsPower > 0) { rocket.increaseRocketPower(); }
             if (StepsPower < 0) { rocket.decreaseRocketPower(); }
